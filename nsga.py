@@ -7,26 +7,23 @@ from agent_wrapper import run_simulation, parse_output
 from functools import partial
 import multiprocessing
 import csv
-import experiment_config
 
-GRADIENT = 0
-VCONCST = 0.04
-#VEGFCONC = 0.8
+#GRADIENT = 0
+#VCONCST = 0.04
 
-SCHEDULE_MIN, SCHEDULE_MAX = 60, 8640  #timesteps: 1h to 24h
-DOSE_MIN, DOSE_MAX = 0, 5
+#SCHEDULE_MIN, SCHEDULE_MAX = 60, 8640  #timesteps: 1h to 24h
+#DOSE_MIN, DOSE_MAX = 0, 5
 
-results_dir = experiment_config.RESULTS_DIR
 
-def sample_schedule():
+def sample_schedule(schedule_min, schedule_max):
     return random.randint(
-        SCHEDULE_MIN // 10,
-        SCHEDULE_MAX // 10
+        schedule_min // 10,
+        schedule_max // 10
     ) * 10
 
 ##types
-def sample_dose():
-    return round(random.uniform(DOSE_MIN, DOSE_MAX), 2)
+def sample_dose(dose_min, dose_max):
+    return round(random.uniform(dose_min, dose_max), 2)
 
 if not hasattr(creator, "FitnessMulti"):
     creator.create("FitnessMulti", base.Fitness, weights=(1.0, -1.0)) #maximize vascular_score, minimize time
@@ -51,13 +48,29 @@ def evaluate_solution(individual, run_id, vegfconc, threshold=0.9):
 
 
 ##initialisation
-def make_toolbox():
+def make_toolbox(schedule_min, schedule_max, dose_min, dose_max):
     toolbox = base.Toolbox()
-    toolbox.register("attr_schedule", random.randrange, SCHEDULE_MIN, SCHEDULE_MAX +1, 10)
-    toolbox.register("attr_dose", sample_dose)
-
-    toolbox.register("individual", tools.initCycle, creator.Individual, (toolbox.attr_schedule, toolbox.attr_dose), n=1)
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+    toolbox.register(
+        "attr_schedule", 
+        random.randrange, 
+        schedule_min, 
+        schedule_max +1, 
+        10
+    )
+    toolbox.register("attr_dose", sample_dose, dose_min, dose_max)
+    toolbox.register(
+        "individual", 
+        tools.initCycle, 
+        creator.Individual, 
+        (toolbox.attr_schedule, toolbox.attr_dose), 
+        n=1
+    )
+    toolbox.register(
+        "population", 
+        tools.initRepeat, 
+        list, 
+        toolbox.individual
+    )
 
 
     toolbox.register("mate", tools.cxTwoPoint)
@@ -68,21 +81,21 @@ def make_toolbox():
 
 
 ##helper functions enforces bounds and enforces 2 decimal point num for dose
-def repair_individual(ind):
+def repair_individual(ind, schedule_min, schedule_max, dose_min, dose_max):
     # schedule stays integer and within bounds
     ind[0] = int(round(ind[0] / 10.0)) * 10
-    ind[0] = max(SCHEDULE_MIN, min(SCHEDULE_MAX, ind[0]))
+    ind[0] = max(schedule_min, min(schedule_max, ind[0]))
 
     # dose stays float within bounds, 2 dp only
     ind[1] = round(ind[1], 2)
-    ind[1] = max(DOSE_MIN, min(DOSE_MAX, ind[1]))
+    ind[1] = max(dose_min, min(dose_max, ind[1]))
 
     return ind
 
 
 #algorithm
-def run_nsga(vegfconc, pop_size=10, ngen=20, cxpb=0.8, mutpb=0.2, threshold=0.9):
-    toolbox = make_toolbox()
+def run_nsga(vegfconc, pop_size, ngen, cxpb, mutpb, threshold, schedule_min, schedule_max, dose_min, dose_max):
+    toolbox = make_toolbox(schedule_min, schedule_max, dose_min, dose_max)
     pool = multiprocessing.Pool()
 
     # Initialize population
@@ -114,8 +127,8 @@ def run_nsga(vegfconc, pop_size=10, ngen=20, cxpb=0.8, mutpb=0.2, threshold=0.9)
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
             if random.random() < cxpb:
                 toolbox.mate(child1, child2)
-                repair_individual(child1)
-                repair_individual(child2)
+                repair_individual(child1, schedule_min, schedule_max, dose_min, dose_max)
+                repair_individual(child2, schedule_min, schedule_max, dose_min, dose_max)
                 del child1.fitness.values
                 del child2.fitness.values
 
@@ -123,7 +136,7 @@ def run_nsga(vegfconc, pop_size=10, ngen=20, cxpb=0.8, mutpb=0.2, threshold=0.9)
         for mutant in offspring:
             if random.random() < mutpb:
                 toolbox.mutate(mutant)
-                repair_individual(mutant)
+                repair_individual(mutant, schedule_min, schedule_max, dose_min, dose_max)
                 del mutant.fitness.values
 
         # Evaluate valid individuals
