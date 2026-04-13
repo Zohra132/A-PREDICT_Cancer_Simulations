@@ -2,7 +2,6 @@
 import numpy as np
 
 
-
 def evaluate_run(data, threshold=0.9):
 
     vascular = np.array(data["vascularisation"])
@@ -15,5 +14,5 @@ def evaluate_run(data, threshold=0.9):
         if v >= threshold:
             return peak_vascular, t
 
-    # threshold never reached
+    #if threshold is never reached retrun 99999
     return peak_vascular, 99999
