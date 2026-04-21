@@ -1,3 +1,4 @@
+//code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
 #ifndef OBJECTS_H_
 #define OBJECTS_H_
 
@@ -158,9 +159,11 @@ extern float VEGFRmin; /// (1000.0f/100.0f)*48.6f///min level total VEGFR is all
 extern float sigma; ///no. of VEGFR recs lost by one active notch receptor.
 extern float MAX_dll4; ///max amount of VEGF that will induce the same amount of notch/dll4 - after this it will induce only amount specified in this param - from Liu03 paper
 extern float delta;
-#define actNot_VEGFR_delay 28//CEll_setup 2: 120///28 ///no. of timesteps before active notch affects VEGFR expression
+//#define actNot_VEGFR_delay 28//CEll_setup 2: 120///28 ///no. of timesteps before active notch affects VEGFR expression
+#define actNot_VEGFR_delay 9
 #define actNot_VEGFR_lasts 1 ///no of timesteps activ notch effect on VEGFR expression lasts - after which VEGFR levels will return to normal (given no other active notch delays run out)
-#define VEGFR_dll4_delay 28//120CEll_setup 2: 120////28  ///no. of timesteps it takes for an active VEGFR receptor to cause dll4 expression. goes on the dll4array stack
+//#define VEGFR_dll4_delay 28//120CEll_setup 2: 120////28  ///no. of timesteps it takes for an active VEGFR receptor to cause dll4 expression. goes on the dll4array stack
+#define VEGFR_dll4_delay 9
 #define VEGFR_dll4_lasts 1///no of time steps the active effect of VEGFR has on dll4 up reg - before it goes back to normal.
 
 ///Rearrangement

@@ -1,3 +1,5 @@
+// code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
+
 import springAgent
 import dit
 
@@ -75,7 +77,7 @@ for i in range(1):
     timespent=0
     for t in range(Time):
         if t%399==0:
-            print t
+            print (t)
         world.simulateTimestep()
         worldcube = processdata(world.getGridSiteData(),ymax=1016)
         

@@ -1,3 +1,5 @@
+//code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
+
 #include "ScreenRecording.h"
 #include <iostream>
 void ScreenRecording::screenDump(std::string filename)

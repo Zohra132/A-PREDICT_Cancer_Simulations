@@ -1,3 +1,4 @@
+//code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -78,19 +79,21 @@ float DrugSupplied_tumour_nM = 0;
 float accumulated_DrugDose_Gut = 0;
 float accumulated_DrugDose_Blood_mgL = 0;
 float accumulated_DrugDose_Blood_nM = 0;
-float DrugAbsorption = 0.002083333; //2hrs 0.002083333//4 hrs 0.00104166; //set as 4 hrs - pK table for axitinib says absorption from gut to the blood is same as half life prety much 2.5-4hrs
-float DrugHalfLife = 0.00104166;//set as 4 hours as goes betwen 2.5-6hrs PK table for axitinib //0.001041667//0.000347222; //0.000347222 = 12hr half life //0.000173611; //1 day = 0.000173611//2days = 8.68056E-05; //half life calc: 1 day is 5760 timesteps, as one timestep = 15 seconds (from ubezio model params and plos CB).. its the numbner of timesteps it takes to redcue the amont by half. so if half life = 5 timesteps, you would remove half of it in 1/5 chunks each day.. so 0.2*0.5*amount.. (0.5 to get half of it removed at 0.2 incremenets 1/5 per timestep)		
+
+//Edit: Updated values of DrugAbsorption, DrugHalfLife, drug_delivery_schedule, VD_F, IC50
+float DrugAbsorption = 0.00048135; //0.002083333;  //2hrs 0.002083333//4 hrs 0.00104166; //set as 4 hrs - pK table for axitinib says absorption from gut to the blood is same as half life prety much 2.5-4hrs
+float DrugHalfLife = 0.00009136494; //0.0010416;  //set as 4 hours as goes betwen 2.5-6hrs PK table for axitinib //0.001041667//0.000347222; //0.000347222 = 12hr half life //0.000173611; //1 day = 0.000173611//2days = 8.68056E-05; //half life calc: 1 day is 5760 timesteps, as one timestep = 15 seconds (from ubezio model params and plos CB).. its the numbner of timesteps it takes to redcue the amont by half. so if half life = 5 timesteps, you would remove half of it in 1/5 chunks each day.. so 0.2*0.5*amount.. (0.5 to get half of it removed at 0.2 incremenets 1/5 per timestep)		
 //float slidingWindowVascularProfile=0.2; //seed this with init vasc profile e.g. high low.. scale between 0 and 1. 
-int drug_delivery_schedule = 2880;//timesteps between delivered doses. 
+int drug_delivery_schedule = 5760; //2880;//timesteps between delivered doses. 
 float dailyDose = 1.75;//read in as argv , not this value.
-float VD_F = 160; //-see PK table for axitinib, we know from the PK table Vd/F  = 160 litres (call param VD_F here) 0.58 is the F value. Volume of a person is about 100 litres..  VD is measure of the dilution of the drug.. so low conc has been dilulated in alot of litres.. 2X dose gets 2x conc (so conc relates ot the dose), but Vd is the same in 2x dose, so VD characterises the drug and person reach /dilution of the drug..  dose independent. So once you have Vd you can predict how other doses affect it. 
+float VD_F = 11; //160; //-see PK table for axitinib, we know from the PK table Vd/F  = 160 litres (call param VD_F here) 0.58 is the F value. Volume of a person is about 100 litres..  VD is measure of the dilution of the drug.. so low conc has been dilulated in alot of litres.. 2X dose gets 2x conc (so conc relates ot the dose), but Vd is the same in 2x dose, so VD characterises the drug and person reach /dilution of the drug..  dose independent. So once you have Vd you can predict how other doses affect it. 
 float drugEffect_VR2 = 0.0f; 
 float Protein_binding_percent = 1;
-float IC50 = 0.2;
+float IC50 = 8; //0.2;
 float supplyScalar =0.0f; //not used
 float baseSupply = 1; //how much drug gets to tumour from blood.. when vasc very poor.. assume 50%
 int readInGradient;
- 
+
 int RUNS=0;
 
 float DrugSupplied_store_Tumour[MAXtime];

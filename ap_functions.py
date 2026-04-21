@@ -1,4 +1,4 @@
-
+//code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
 
 from __future__ import division
 
@@ -312,7 +312,7 @@ def get_SM_series(time=800,epsilon=.9,gradient=.04,gradienttype=2,yBaseline=1000
         undecided=True
         for t in range(time):
             if t<(100000000000+50):
-                if t%100==0: print t
+                if t%100==0: print (t)
                 world.simulateTimestep()
                     #     Sworldcube = pass
                 Mworldcube = np.array(world.getGridMapOfFilopodiaMovement())

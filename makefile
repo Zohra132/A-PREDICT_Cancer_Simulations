@@ -1,3 +1,4 @@
+#code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
 #OS
 UNAME_S := $(shell uname -s)
 
@@ -9,7 +10,7 @@ TARGET = springAgent
 
 ECpack = 2
 GRAPHICS = false
-MAXtime = 100
+MAXtime = 1
 BAHTI_ANALYSIS = false
 ANALYSIS_HYSTERESIS = false
 ANALYSIS_TIME_TO_PATTERN = false

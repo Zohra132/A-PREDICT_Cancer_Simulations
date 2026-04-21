@@ -1,3 +1,5 @@
+#code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
+
 graphics=false
 camp=false
 analysis="time_to_pattern"
@@ -67,7 +69,8 @@ then
 elif [ "$analysis" == "time_to_pattern" ]
 then
 	echo "building time_to_pattern analysis..."
-	make clean; make CDBG=-w ECpack=10 MAXtime=40000 ANALYSIS_TIME_TO_PATTERN=false GRAPHICS=$graphics
+    # Edit: Updated MAXtime value
+    make clean; make CDBG=-w ECpack=4 MAXtime=7000 ANALYSIS_TIME_TO_PATTERN=false GRAPHICS=$graphics
 else
 	echo "$analysis is not a valid analysis. Enter either pybind, bistability or time_to_pattern with the -a flag."
 	exit 1

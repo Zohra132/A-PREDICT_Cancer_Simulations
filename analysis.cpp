@@ -1,3 +1,5 @@
+//code Bentley Lab created, currently confidential as paper under review Au et al Cancer Cell 2026
+
 #include <math.h>
 #include <iomanip>
 #include "objects.h"
@@ -714,7 +716,7 @@ if(non_adjacent_Tips>0){
     //cout<<"Tips: "<<tipCount<<" adjTips: "<<adjacent_Tips<<" nonAdjTips: "<<non_adjacent_Tips<<endl;
 
     //functional vessel proportional score:
-supplyScore=(float)non_adjacent_Tips/4.0f;
+supplyScore=(float)non_adjacent_Tips/2.0f; //Change depending on number of cells
 
 if(supplyScore>1) supplyScore=1;
 
