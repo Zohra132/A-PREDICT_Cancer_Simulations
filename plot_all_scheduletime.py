@@ -4,28 +4,33 @@ import matplotlib.pyplot as plt
 import statistics
 
 
-folder = "0.9-0.1"
-runs = [1, 2, 3, 4]
+folder = "pop100-main"
+runs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+output = "schedule_vs_time_all_runs_comparison.png"
 
-fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+fig, axes = plt.subplots(5, 4, figsize=(16, 20))
 axes = axes.flatten()
 all_mean_time = []
 all_mean_schedule = []
 
 
 for i, run in enumerate(runs):
+
+    full_file = f"results_run_{run}_full.csv"
+    paretofront_file = f"results_run_{run}_pareto.csv"
+
     times_full, schedule_full = [], []
     times_pareto, schedule_pareto = [], []
 
     # Load FULL population
-    with open(f"{folder}/results_run_{run}_full.csv", "r") as f:
+    with open(f"{folder}/{full_file}", "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             times_full.append(float(row["time"]))
             schedule_full.append(float(row["schedule"]))
 
     # Load Pareto
-    with open(f"{folder}/results_run_{run}_pareto.csv", "r") as f:
+    with open(f"{folder}/{paretofront_file}", "r") as f:
         reader = csv.DictReader(f)
         for row in reader:
             times_pareto.append(float(row["time"]))
@@ -91,6 +96,5 @@ plt.figtext(0.5, 0.05, summary_text, ha='center', fontsize=11)
 
 plt.tight_layout()
 plt.subplots_adjust(bottom=0.2)
-
-plt.savefig(f"{folder}/schedule_vs_time_all_runs_comparison.png", dpi=300)
+plt.savefig(f"{folder}/{output}", dpi=300)
 plt.show()

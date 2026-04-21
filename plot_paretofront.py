@@ -3,11 +3,16 @@ import csv
 import matplotlib.pyplot as plt
 import statistics
 
+folder = "pop100-main"
+full_file = "results_run_2_full.csv"
+paretofront_file = "results_run_2_pareto.csv"
+output = "paretofront-run2.png"
+
 times_full, vasculars_full = [], []
 times_pareto, vasculars_pareto = [], []
 
-# Load full population
-with open("results_run_2_full.csv", "r") as f:
+#Load full population
+with open(f"{folder}/{full_file}", "r") as f:
     reader = csv.DictReader(f)
     for row in reader:
         vascular = float(row["vascular"])
@@ -16,8 +21,8 @@ with open("results_run_2_full.csv", "r") as f:
             times_full.append(time)
             vasculars_full.append(vascular)
 
-# Load Pareto front
-with open("results_run_2_pareto.csv", "r") as f:
+#Load Pareto front
+with open(f"{folder}/{paretofront_file}", "r") as f:
     reader = csv.DictReader(f)
     for row in reader:
         vascular = float(row["vascular"])
@@ -29,7 +34,6 @@ with open("results_run_2_pareto.csv", "r") as f:
 
 mean_vascular_full = statistics.mean(vasculars_full)
 std_vascular_full = statistics.stdev(vasculars_full)
-
 mean_time_full = statistics.mean(times_full)
 std_time_full = statistics.stdev(times_full)
 
@@ -37,18 +41,10 @@ std_time_full = statistics.stdev(times_full)
 fig, ax = plt.subplots(figsize=(10, 7))
 
 #Full population
-ax.scatter(
-    times_full, vasculars_full,
-    marker='x', s=30, c='gray', alpha=0.3,
-    label='Full population'
-)
+ax.scatter( times_full, vasculars_full, marker='x', s=30, c='gray', alpha=0.3, label='Full population')
 
 #Pareto front
-ax.scatter(
-    times_pareto, vasculars_pareto,
-    marker='o', s=80, c='black', alpha=0.9,
-    label='Pareto front'
-)
+ax.scatter(times_pareto, vasculars_pareto, marker='o', s=80, c='black', alpha=0.9, label='Pareto front')
 
 ax = plt.gca()
 ax.spines['top'].set_visible(False)
@@ -68,5 +64,5 @@ stats_text = (
 plt.subplots_adjust(bottom=0.25)
 plt.figtext(0.5, 0.02, stats_text, ha="center", fontsize=10)
  
-#plt.savefig("pop24-gen4-0.9-0.1/paretofront-run4.png", dpi=300, bbox_inches='tight')
+plt.savefig(f"{folder}/{output}", dpi=300, bbox_inches='tight')
 plt.show()
