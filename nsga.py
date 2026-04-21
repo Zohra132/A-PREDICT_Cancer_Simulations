@@ -16,13 +16,14 @@ if not hasattr(creator, "Individual"):
     creator.create("Individual", list, fitness=creator.FitnessMulti)
 
 # Evaluation function
-def evaluate_solution(individual, run_id, vegfconc, threshold=0.9):
+def evaluate_solution(individual, run_id, vegfconc, threshold=0.75):
 
     #Runs SpringAgent simulation for a given schedule and doseand returns negative vascular score, time to threshold
     schedule = int(individual[0]) #schedule as int
     dose = round(float(individual[1]), 2) #round the float to 2dp
 
     #schedule, dose = individual
+    dose = int(dose) if dose.is_integer() else str(dose)
     filename = run_simulation(int(schedule), dose, vegfconc, run_id)
     data = parse_output(filename) 
     obj1, obj2 = evaluate_run(data, threshold)

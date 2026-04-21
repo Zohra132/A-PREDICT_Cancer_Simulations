@@ -32,23 +32,6 @@ def parse_output(filename) -> dict:
                 rows.append(list(map(float, parts)))
     
     rows = [np.array(r) for r in rows]
-        
-    """
-    def to_float_list(row):
-        # remove empty strings
-        return [float(x) for x in row if x.strip()!='']
-     
-        #1: 2880    0   0   0   0.8   1   1           parameters
-        #2:                                           
-        #3: 0  0.25 0.5 0.75 1 1.25 ...               time 
-        #4: 0 0 0 0 ...                               
-        #5: 0 0 0 0 ...                               
-        #6: 0 0 0 0 ...                               
-        #7: 0 0 0 0 ...                              
-        #8: 0 0 0 0 ...                               supplyLine - vascularisation score
-        #9: 0 0 0 0 ...                               
-        #10: 0 2038.89 53.53                
-    """
     
     data = {
         "params": rows[0],

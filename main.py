@@ -10,11 +10,11 @@ if __name__ == '__main__':
 
     """
     Example command:
-    python3 main.py --pop_size 10 --n_gen 10 --threshold 0.9 --cx_prob 0.9 --mut_prob 0.1 --output_filename results 
+    python3 main.py --pop_size 50 --n_gen 50 --threshold 0.9 --cx_prob 0.9 --mut_prob 0.1 --output_filename results 
     --vegf 8 7.2 6.4 --schedule_min 100 --schedule_max 7000 --dose_min 1 --dose_max 800
     """
     
-    parser.add_argument("--pop_size", type=int, default=10, help="population size")
+    parser.add_argument("--pop_size", type=int, default=8, help="population size must be a multiple of 4") 
     parser.add_argument("--n_gen", type=int, default=10, help="number of generations")
     parser.add_argument("--threshold", type=float, default=0.9, help="vascularisation threshold")
     parser.add_argument("--cx_prob", type=float, default=0.9, help="crossover probability")

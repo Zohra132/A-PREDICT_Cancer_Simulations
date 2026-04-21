@@ -2,7 +2,8 @@
 import numpy as np
 
 
-def evaluate_run(data, threshold=0.9):
+#def evaluate_run(data, threshold=0.9):
+def evaluate_run(data, threshold):
 
     vascular = np.array(data["vascularisation"])
     time = np.array(data["time_hours"])
