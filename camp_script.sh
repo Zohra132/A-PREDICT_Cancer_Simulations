@@ -2,9 +2,9 @@ REMOTE_USER=sohrabz
 REMOTE_HOST=login.nemo.thecrick.org
 SSH_KEY=~/.ssh/id_rsa  
 
-N_RUNS=4 # number of slurm runs
+N_RUNS=10 # number of slurm runs
 
-# File name and location so sync with nemo
+# File name and location to sync with nemo
 timestamp=$(date "+%Y.%m.%d-%H.%M.%S")
 camp_subfolder_name="EA-Optimiser/$timestamp"
 camp_home="/camp/home/$REMOTE_USER"
@@ -15,10 +15,10 @@ echo "camp folder name: $camp_subfolder_name"
 echo "number of runs: $numberOfRuns"
 echo "uploading simulation files to nemo..."
 
-# Sync files with nemo (automatically create folder with same permissions as local files)
+#Sync files with nemo (automatically create folder with same permissions as local files)
 ssh -i ~/.ssh/id_rsa sohrabz@login.nemo.thecrick.org "mkdir -p $camp_home/$camp_subfolder_name"
 
-# Then rsync files
+#rsync files
 rsync -av \
   --include=*/ \
   --include=*.cpp \
@@ -65,9 +65,9 @@ camp_subfolder_name="$camp_subfolder_name"
 camp_home="$camp_home"
 
 # Example parameter sweeps
-pop_size=(52)
-n_gen=(25)
-threshold=(0.9)
+pop_size=(100)
+n_gen=(50)
+threshold=(0.75)
 cx_prob=(0.9)
 mut_prob=(0.1)
 
@@ -95,7 +95,7 @@ for p in "\${pop_size[@]}"; do
             --schedule_min 100 \\
             --schedule_max 7000 \\
             --dose_min 0.01 \\
-            --dose_max 0.2
+            --dose_max 80
 
           ((job_count++))
 

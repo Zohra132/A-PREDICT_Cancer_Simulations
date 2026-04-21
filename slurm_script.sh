@@ -11,7 +11,7 @@ echo "Total $# arguments passed to me are: $*"
 echo "Running job $SLURM_JOB_ID, array task $SLURM_ARRAY_TASK_ID"
 
 
-# Parse arguments
+#Parse arguments
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --pop_size) pop_size="$2"; shift 2;;
@@ -42,11 +42,9 @@ done
 ml purge
 ml foss
 ml Python
-
 source ~/envs/myenv/bin/activate
 
-# Make output unique per run
-
+#Make output unique per run
 run_id=$SLURM_ARRAY_TASK_ID
 output_filename="${output_filename}_run_${run_id}"
 
@@ -65,7 +63,7 @@ echo "dose_max=$dose_max"
 echo "output=$output_filename"
 
 
-# Run Python script
+#Run python script
 python3 main.py \
   --pop_size "$pop_size" \
   --n_gen "$n_gen" \
