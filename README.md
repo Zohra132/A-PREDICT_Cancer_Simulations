@@ -86,7 +86,7 @@ Pareto front for every generation:
 ## Plot Graphs
 Six plotting scripts are provided to visualise and comapre optimisation results. Each script requires the output folder produced by `main.py` to be specified.
 
-###For individual runs:
+### For individual runs:
 
 ```bash
 python3 plot_paretofront.py
