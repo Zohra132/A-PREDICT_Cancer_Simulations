@@ -1,4 +1,4 @@
-# Multi-Objective Evolutionary Optimisation of Cancer Treatment Strategies Using MEMAgent Sring 
+# Multi-Objective Evolutionary Optimisation of Cancer Treatment Strategies Using MEMAgent-Spring Model
 This project implements a Python-based optimiser, running experiements locally or on a HPC cluster. 
 
 It builds upon the MemAgent-Spring Model developed within Cellular Adaptive Behaviour Lab. Bentley Lab created code, currently confidential as paper under review Au et al Cancer Cell 2026, has been annotated at the top of each file.
