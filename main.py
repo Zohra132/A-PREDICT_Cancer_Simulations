@@ -10,8 +10,18 @@ if __name__ == '__main__':
 
     """
     Example command:
-    python3 main.py --pop_size 50 --n_gen 50 --threshold 0.9 --cx_prob 0.9 --mut_prob 0.1 --output_filename results 
-    --vegf 8 7.2 6.4 --schedule_min 100 --schedule_max 7000 --dose_min 1 --dose_max 800
+    python3 main.py 
+    --pop_size 100
+    --n_gen 50
+    --threshold 0.9 
+    --cx_prob 0.9 
+    --mut_prob 0.1 
+    --output_filename results
+    --vegf 8 7.2 6.4 
+    --schedule_min 100 
+    --schedule_max 7000 
+    --dose_min 1 
+    --dose_max 800
     """
     
     parser.add_argument("--pop_size", type=int, default=8, help="population size must be a multiple of 4") 
@@ -19,7 +29,7 @@ if __name__ == '__main__':
     parser.add_argument("--threshold", type=float, default=0.9, help="vascularisation threshold")
     parser.add_argument("--cx_prob", type=float, default=0.9, help="crossover probability")
     parser.add_argument("--mut_prob", type=float, default=0.1, help="mutation probability")
-    parser.add_argument("--output_filename", type=str, default="output", help="output file")
+    parser.add_argument("--output_filename", type=str, default="output123", help="output file")
     parser.add_argument("--vegf", type=float, nargs="+", default=[8.0, 7.2, 6.4], help="one or more VEGF levels")
     parser.add_argument("--schedule_min", type=int, default=100, help="minimium schedule timesteps")
     parser.add_argument("--schedule_max", type=int, default=7000, help="maximum schedule timesteps")
@@ -39,7 +49,9 @@ if __name__ == '__main__':
     SCHEDULE_MAX = args.schedule_max
     DOSE_MIN = args.dose_min
     DOSE_MAX = args.dose_max
-    run_number = 1 
+    run_number = 1
+
+
 
     for vegf in VEGF:
         print(f"Running optimization for VEGF = {vegf}")
@@ -54,10 +66,11 @@ if __name__ == '__main__':
             schedule_min=SCHEDULE_MIN,
             schedule_max=SCHEDULE_MAX,
             dose_min=DOSE_MIN,
-            dose_max=DOSE_MAX
+            dose_max=DOSE_MAX,
+            output=FILENAME
         )
 
-        pareto_gen_file = f"{FILENAME}_pareto_gen_vegf{vegf}.csv"
+        pareto_gen_file = os.path.join(FILENAME, f"{FILENAME}_pareto_gen_vegf{vegf}.csv")
         with open(pareto_gen_file, 'w', newline='') as f:
             writer = csv.DictWriter(
                 f,
@@ -77,8 +90,8 @@ if __name__ == '__main__':
 
         run_number += 1 
 
-        pareto_file = f"{FILENAME}_pareto.csv"
-        full_file = f"{FILENAME}_full.csv"
+        pareto_file = os.path.join(FILENAME, f"{FILENAME}_pareto.csv")
+        full_file   = os.path.join(FILENAME, f"{FILENAME}_full.csv")
 
         pareto_exists = os.path.isfile(pareto_file)
         full_exists = os.path.isfile(full_file)

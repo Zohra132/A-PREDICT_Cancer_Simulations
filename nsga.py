@@ -16,7 +16,7 @@ if not hasattr(creator, "Individual"):
     creator.create("Individual", list, fitness=creator.FitnessMulti)
 
 # Evaluation function
-def evaluate_solution(individual, run_id, vegfconc, threshold=0.75):
+def evaluate_solution(individual, run_id, vegfconc, output, threshold=0.75):
 
     #Runs SpringAgent simulation for a given schedule and doseand returns negative vascular score, time to threshold
     schedule = int(individual[0]) #schedule as int
@@ -24,7 +24,7 @@ def evaluate_solution(individual, run_id, vegfconc, threshold=0.75):
 
     #schedule, dose = individual
     dose = int(dose) if dose.is_integer() else str(dose)
-    filename = run_simulation(int(schedule), dose, vegfconc, run_id)
+    filename = run_simulation(int(schedule), dose, vegfconc, run_id, output)
     data = parse_output(filename) 
     obj1, obj2 = evaluate_run(data, threshold)
     return obj1, obj2
@@ -107,7 +107,8 @@ def run_nsga(
         schedule_min, 
         schedule_max, 
         dose_min, 
-        dose_max):
+        dose_max,
+        output):
     
     if pop_size % 4 != 0:
         raise ValueError("Population size must be divisible by 4")
@@ -124,7 +125,7 @@ def run_nsga(
     run_counter = 0 
 
     #Evaluate initial population
-    args_list = [(ind, i, vegfconc) for i, ind in enumerate(population)] 
+    args_list = [(ind, i, vegfconc, output) for i, ind in enumerate(population)] 
     results = pool.starmap(evaluate_solution, args_list) #runs all simulations in parallel
 
     for ind, fit in zip(population, results):
@@ -164,7 +165,7 @@ def run_nsga(
 
         #Evaluate valid individuals
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        args_list = [(ind, run_counter + idx, vegfconc) for idx, ind in enumerate(invalid_ind)]
+        args_list = [(ind, run_counter + idx, vegfconc, output) for idx, ind in enumerate(invalid_ind)]
 
         results = pool.starmap(
             partial(evaluate_solution, threshold=threshold),
