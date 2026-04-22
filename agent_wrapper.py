@@ -2,11 +2,15 @@
 import subprocess
 import pandas as pd
 import numpy as np
+import os
 
 
-def run_simulation(drug_schedule, dailyDose, vegfconc, runID):
+def run_simulation(drug_schedule, dailyDose, vegfconc, runID, output):
+
+    os.makedirs(output, exist_ok=True)
+
     cmd = [
-        "./springAgent",
+        "../springAgent",
         str(drug_schedule),
         str(dailyDose),
         "0", #readInGradient
@@ -15,11 +19,12 @@ def run_simulation(drug_schedule, dailyDose, vegfconc, runID):
         str(runID)
     ]
     print("Running:", " ".join(cmd))
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, cwd=output)
 
     vegf_str = str(int(vegfconc)) if vegfconc.is_integer() else str(vegfconc)
     filename = f"{drug_schedule}_dose_{dailyDose}_gradient_0_VconcST_0.04_Vconc_{vegf_str}_run_{runID}.csv"
-    return filename
+    #return filename
+    return os.path.join(output, filename)
 
 
 def parse_output(filename) -> dict:
