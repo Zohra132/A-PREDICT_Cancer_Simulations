@@ -1,5 +1,7 @@
-# Multi-Objective Evolutionary Optimisation of Cancer Treatment Strategies Using SpringAgent
-This project implements a Python-based optimiser, running experiements locally or on a HPC cluster. It builds upon the SpringAgent C++ simulation with optional graphics suppport.
+# Multi-Objective Evolutionary Optimisation of Cancer Treatment Strategies Using MEMAgent Sring 
+This project implements a Python-based optimiser, running experiements locally or on a HPC cluster. 
+
+It builds upon the MemAgent-Spring Model developed within Cellular Adaptive Behaviour Lab. Bentley Lab created code, currently confidential as paper under review Au et al Cancer Cell 2026, has been annotated at the top of each file.
 
 ## Run setup
 Install system and python dependencies:
@@ -34,8 +36,8 @@ This must be run with runtime arguments.
 Example command:
 ```bash
 python3 main.py 
-    --pop_size 8 
-    --n_gen 8
+    --pop_size 100
+    --n_gen 50
     --threshold 0.9 
     --cx_prob 0.9 
     --mut_prob 0.1 
@@ -69,7 +71,7 @@ scp ~/<full/local/path>/BuildSpringAgent.sh \
 ```
 
 ## Optimiser Output Files
-After running the optimiser, results are saved to CSV files using the specified --output_filename prefix. THe results are saved to a folder using the --output_filename prefix
+After running the optimiser, results are saved to CSV files using the specified --output_filename prefix. The results are saved to a folder using the --output_filename prefix
 
 ### Output files
 Final Pareto front (best solutions only):
@@ -81,6 +83,8 @@ Full final generation (all individuals):
 Pareto front for every generation:
 {output_filename}_run_${run_id}_pareto_gen_vegf{vegf}.csv
 
+
+Folders 'pop100-main, 'pop100-initial', 'pilot_runs_0.7-0.25' and 'pilot_runs_0.9-0.1', contain the output files of 10 runs, from 4 separate configurations.
 
 
 ## Plot Graphs
@@ -107,3 +111,5 @@ python3 plot_combined_scheduledose.py
 These scripts expect multiple `*_pareto.csv` and `*_full.csv` files to be present in the output folder. 
 
 Plots are saved as `.png` files.
+
+Folders 'pop100-main, 'pop100-initial', 'pilot_runs_0.7-0.25' and 'pilot_runs_0.9-0.1', contain graphs generated from these scripts.
