@@ -69,7 +69,7 @@ scp ~/<full/local/path>/BuildSpringAgent.sh \
 ```
 
 ## Optimiser Output Files
-After running the optimiser, results are saved to CSV files using the specified --output_filename prefix.
+After running the optimiser, results are saved to CSV files using the specified --output_filename prefix. THe results are saved to a folder using the --output_filename prefix
 
 ### Output files
 Final Pareto front (best solutions only):
@@ -82,3 +82,17 @@ Pareto front for every generation:
 {output_filename}_run_${run_id}_pareto_gen_vegf{vegf}.csv
 
 
+
+## Plot Graphs
+Six plotting scripts are provided to visualise optimisation outputs. Each script requires the output folder produced by `main.py` to be specified.
+
+```bash
+python3 plot_all_paretofront.py
+python3 plot_all_scheduledose.py
+python3 plot_all_scheduletime.py
+python3 plot_combined_convergence.py
+python3 plot_combined_paretofront.py
+python3 plot_combined_scheduledose.py
+```
+
+Plots are saved as `.png` files.
