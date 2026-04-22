@@ -3,6 +3,14 @@ This project implements a Python-based optimiser, running experiements locally o
 
 It builds upon the MemAgent-Spring Model developed within Cellular Adaptive Behaviour Lab. Bentley Lab created code, currently confidential as paper under review Au et al Cancer Cell 2026, has been annotated at the top of each file.
 
+
+## create virtual environment and activate
+```bash
+python3.11 -m venv venv
+source venv/bin/activate
+```
+
+
 ## Run setup
 Install system and python dependencies:
 ```bash
