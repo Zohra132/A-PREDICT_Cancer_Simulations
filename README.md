@@ -4,7 +4,7 @@ This project implements a Python-based optimiser, running experiements locally o
 It builds upon the MemAgent-Spring Model developed within Cellular Adaptive Behaviour Lab. Bentley Lab created code, currently confidential as paper under review Au et al Cancer Cell 2026, has been annotated at the top of each file.
 
 
-## create virtual environment and activate
+## Create virtual environment and activate
 ```bash
 python3.11 -m venv venv
 source venv/bin/activate
@@ -22,8 +22,8 @@ macOS users must have Homebrew installed.
 
 ## Build simulation
 Build the springAgent executable with data output:
-```
-bash ./BuildSpringAgent.sh 
+```bash 
+./BuildSpringAgent.sh 
 ```
 
 Build the springAgent executable with graphics but no data output:
@@ -43,17 +43,17 @@ This must be run with runtime arguments.
 ## Run optimiser (Local)
 Example command:
 ```bash
-python3 main.py 
-    --pop_size 100
-    --n_gen 50
-    --threshold 0.9 
-    --cx_prob 0.9 
-    --mut_prob 0.1 
-    --output_filename results
-    --vegf 8 7.2 6.4 
-    --schedule_min 100 
-    --schedule_max 7000 
-    --dose_min 1 
+python3 main.py \
+    --pop_size 100 \
+    --n_gen 50 \
+    --threshold 0.9 \
+    --cx_prob 0.9 \
+    --mut_prob 0.1 \
+    --output_filename results \
+    --vegf 8 7.2 6.4 \
+    --schedule_min 100 \
+    --schedule_max 7000 \
+    --dose_min 1 \
     --dose_max 800
 ```
 

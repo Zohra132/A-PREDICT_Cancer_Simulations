@@ -10,17 +10,17 @@ if __name__ == '__main__':
 
     """
     Example command:
-    python3 main.py 
-    --pop_size 100
-    --n_gen 50
-    --threshold 0.9 
-    --cx_prob 0.9 
-    --mut_prob 0.1 
-    --output_filename results
-    --vegf 8 7.2 6.4 
-    --schedule_min 100 
-    --schedule_max 7000 
-    --dose_min 1 
+    python3 main.py \
+    --pop_size 100 \
+    --n_gen 50 \
+    --threshold 0.9 \
+    --cx_prob 0.9 \
+    --mut_prob 0.1 \
+    --output_filename results \
+    --vegf 8 7.2 6.4 \
+    --schedule_min 100 \
+    --schedule_max 7000 \
+    --dose_min 1 \
     --dose_max 800
     """
     
@@ -50,6 +50,8 @@ if __name__ == '__main__':
     DOSE_MIN = args.dose_min
     DOSE_MAX = args.dose_max
     run_number = 1
+
+    os.makedirs(FILENAME, exist_ok=True)
 
 
 
