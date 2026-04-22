@@ -84,7 +84,8 @@ Pareto front for every generation:
 
 
 ## Plot Graphs
-Six plotting scripts are provided to visualise optimisation outputs. Each script requires the output folder produced by `main.py` to be specified.
+Six plotting scripts are provided to visualise and comapre optimisation results **multiple 
+independent runs**. Each script requires the output folder produced by `main.py` to be specified.
 
 ```bash
 python3 plot_all_paretofront.py
@@ -94,5 +95,7 @@ python3 plot_combined_convergence.py
 python3 plot_combined_paretofront.py
 python3 plot_combined_scheduledose.py
 ```
+
+These scripts expect multiple `*_pareto.csv` and `*_full.csv` files to be present in the output folder. 
 
 Plots are saved as `.png` files.
