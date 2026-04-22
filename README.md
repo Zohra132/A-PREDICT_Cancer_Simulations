@@ -84,13 +84,21 @@ Pareto front for every generation:
 
 
 ## Plot Graphs
-Six plotting scripts are provided to visualise and comapre optimisation results **multiple 
-independent runs**. Each script requires the output folder produced by `main.py` to be specified.
+Six plotting scripts are provided to visualise and comapre optimisation results. Each script requires the output folder produced by `main.py` to be specified.
+
+###For individual runs:
+
+```bash
+python3 plot_paretofront.py
+python3 plot_all_graphs.py
+```
+
+
+### For multiple independent runs
 
 ```bash
 python3 plot_all_paretofront.py
 python3 plot_all_scheduledose.py
-python3 plot_all_scheduletime.py
 python3 plot_combined_convergence.py
 python3 plot_combined_paretofront.py
 python3 plot_combined_scheduledose.py
